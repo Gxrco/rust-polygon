@@ -15,24 +15,33 @@ fn main() -> std::io::Result<()> {
     // Clear the framebuffer with a default color, possibly black
     framebuffer.set_background_color(0x000000); // Pass hexadecimal value directly
 
-    // Define the points for the polygon
-    let points: Vec<(usize, usize)> = vec![
+    // Define the points for the first polygon
+    let points1: Vec<(usize, usize)> = vec![
         (165, 380), (185, 360), (180, 330), (207, 345), (233, 330),
         (230, 360), (250, 380), (220, 385), (205, 410), (193, 383),
     ];
 
-    // Set the current drawing color to white for the polygon outline
-    framebuffer.set_current_color(0xFFFFFF); // Pass hexadecimal value directly
-    draw_polygon(&mut framebuffer, &points);
+    // Define the points for the second polygon
+    let points2: Vec<(usize, usize)> = vec![
+        (321, 335), (288, 286), (339, 251), (374, 302)
+    ];
 
-    // Set the current drawing color to yellow for the fill
-    framebuffer.set_current_color(0xFFFF00); // Pass hexadecimal value directly
-    fill_polygon(&mut framebuffer, &points);
+    // Draw and fill the first polygon with yellow fill and white border
+    framebuffer.set_current_color(0xFFFFFF); // White for the outline
+    draw_polygon(&mut framebuffer, &points1);
+    framebuffer.set_current_color(0xFFFF00); // Yellow for the fill
+    fill_polygon(&mut framebuffer, &points1);
+
+    // Draw and fill the second polygon with blue fill and white border
+    framebuffer.set_current_color(0xFFFFFF); // White for the outline
+    draw_polygon(&mut framebuffer, &points2);
+    framebuffer.set_current_color(0x0000FF); // Blue for the fill
+    fill_polygon(&mut framebuffer, &points2);
 
     // Save the framebuffer as a BMP file
     framebuffer.render_buffer("out.bmp")?;
 
-    println!("Framebuffer rendered to output_polygon.bmp");
+    println!("Framebuffer rendered to output_polygons.bmp");
     Ok(())
 }
 
