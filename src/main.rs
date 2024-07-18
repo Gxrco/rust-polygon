@@ -26,6 +26,11 @@ fn main() -> std::io::Result<()> {
         (321, 335), (288, 286), (339, 251), (374, 302)
     ];
 
+    // Define the points for the third polygon
+    let points3: Vec<(usize, usize)> = vec![
+        (377, 249), (411, 197), (436, 249)
+    ];
+
     // Draw and fill the first polygon with yellow fill and white border
     framebuffer.set_current_color(0xFFFFFF); // White for the outline
     draw_polygon(&mut framebuffer, &points1);
@@ -37,6 +42,12 @@ fn main() -> std::io::Result<()> {
     draw_polygon(&mut framebuffer, &points2);
     framebuffer.set_current_color(0x0000FF); // Blue for the fill
     fill_polygon(&mut framebuffer, &points2);
+
+    // Draw and fill the third polygon with red fill and white border
+    framebuffer.set_current_color(0xFFFFFF); // White for the outline
+    draw_polygon(&mut framebuffer, &points3);
+    framebuffer.set_current_color(0xFF0000); // Red for the fill
+    fill_polygon(&mut framebuffer, &points3);
 
     // Save the framebuffer as a BMP file
     framebuffer.render_buffer("out.bmp")?;
