@@ -15,44 +15,58 @@ fn main() -> std::io::Result<()> {
     // Clear the framebuffer with a default color, possibly black
     framebuffer.set_background_color(0x000000); // Pass hexadecimal value directly
 
-    // Define the points for the first polygon
+    // Define the points for the polygons
     let points1: Vec<(usize, usize)> = vec![
         (165, 380), (185, 360), (180, 330), (207, 345), (233, 330),
         (230, 360), (250, 380), (220, 385), (205, 410), (193, 383),
     ];
-
-    // Define the points for the second polygon
     let points2: Vec<(usize, usize)> = vec![
         (321, 335), (288, 286), (339, 251), (374, 302)
     ];
-
-    // Define the points for the third polygon
     let points3: Vec<(usize, usize)> = vec![
         (377, 249), (411, 197), (436, 249)
     ];
+    let points4: Vec<(usize, usize)> = vec![
+        (413, 177), (448, 159), (502, 88), (553, 53), (535, 36), 
+        (676, 37), (660, 52), (750, 145), (761, 179), (672, 192), 
+        (659, 214), (615, 214), (632, 230), (580, 230), (597, 215), 
+        (552, 214), (517, 144), (466, 180)
+    ];
+    let points5: Vec<(usize, usize)> = vec![
+        (682, 175), (708, 120), (735, 148), (739, 170)
+    ];
 
-    // Draw and fill the first polygon with yellow fill and white border
+    // Set the current drawing color to white for the polygon outline and then fill it
     framebuffer.set_current_color(0xFFFFFF); // White for the outline
     draw_polygon(&mut framebuffer, &points1);
     framebuffer.set_current_color(0xFFFF00); // Yellow for the fill
     fill_polygon(&mut framebuffer, &points1);
 
-    // Draw and fill the second polygon with blue fill and white border
-    framebuffer.set_current_color(0xFFFFFF); // White for the outline
+    framebuffer.set_current_color(0xFFFFFF); 
     draw_polygon(&mut framebuffer, &points2);
-    framebuffer.set_current_color(0x0000FF); // Blue for the fill
+    framebuffer.set_current_color(0x0000FF);
     fill_polygon(&mut framebuffer, &points2);
 
-    // Draw and fill the third polygon with red fill and white border
-    framebuffer.set_current_color(0xFFFFFF); // White for the outline
+    framebuffer.set_current_color(0xFFFFFF);
     draw_polygon(&mut framebuffer, &points3);
-    framebuffer.set_current_color(0xFF0000); // Red for the fill
+    framebuffer.set_current_color(0xFF0000);
     fill_polygon(&mut framebuffer, &points3);
+
+    // Polygon 4 with Polygon 5 as a hole
+    framebuffer.set_current_color(0xFFFFFF);
+    draw_polygon(&mut framebuffer, &points4);
+    framebuffer.set_current_color(0x00FF00); // Green for fill
+    fill_polygon(&mut framebuffer, &points4);
+
+    // Simulating the hole by redrawing and refilling the area of Polygon 5 with the background color
+    framebuffer.set_current_color(0x000000);
+    draw_polygon(&mut framebuffer, &points5);
+    fill_polygon(&mut framebuffer, &points5);
 
     // Save the framebuffer as a BMP file
     framebuffer.render_buffer("out.bmp")?;
 
-    println!("Framebuffer rendered to output_polygons.bmp");
+    println!("Framebuffer rendered to out.bmp");
     Ok(())
 }
 
